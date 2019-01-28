@@ -14,7 +14,7 @@ Installation
 -----
 
 ```bash
-composer install magical/php-rest-api
+composer require magical/php-rest-api
 ```
 
 Usage
