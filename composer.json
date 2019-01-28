@@ -1,0 +1,26 @@
+{
+    "name": "magical/php-rest-api",
+    "description": "magiCal REST API client for PHP",
+    "type": "library",
+    "keywords": [
+        "magical",
+        "booking php",
+        "magical api",
+        "datapicker"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "magiCal",
+            "email": "info@magic-calendar.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.4.0",
+        "ext-curl": "*"
+    },
+    "autoload": {
+      "psr-4": { "Magical\\" : "src/Magical/" }
+    }
+}
