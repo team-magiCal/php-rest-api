@@ -1,7 +1,7 @@
 magiCal REST API for PHP
 ===============================
 
-This repository contains the open source PHP client for magiCal REST API. Documentation can be found at: https://magic-calendar.com/docs
+This repository contains the open source PHP client for magiCal REST API. Documentation can be found at: https://www.magic-calendar.com/docs
 
 Requirements
 -----
@@ -12,9 +12,13 @@ Requirements
 
 Installation
 -----
-
+Run the Composer command to install the latest stable version of MagiCal:
 ```bash
 composer require magical/php-rest-api
+```
+After installing, you need to require Composer's autoloader:
+```php
+require 'vendor/autoload.php';
 ```
 
 Usage
@@ -26,24 +30,45 @@ Usage
     * **DYNAMIC_TOKEN** - if you are using [dynamic plan](https://magic-calendar.com/pricing), you can have multiple calendars on one web site.
 
 ```php
-require 'autoload.php';
-
-// if you are using DYNAMIC plan, add it as the second parameter
-$magiCal = new \Magical\Client('YOUR_API_TOKEN');
-$magiCal->setSecretToken('YOUR_SECRET_TOKEN');
+\Magical\MagiCal::setSecretToken('st_DUzEYJoX2jacJkKHvMrL7CEZyJX1bVs');
+\Magical\MagiCal::setApiToken('at_FAjxXZC5yOh7QCeOd3jgpXAVRlQtIaR');
+\Magical\MagiCal::setDynamicToken('dt_kEr41T'); // only if you are using dynamic plan
 ```
-That's easy enough. Now we can query the server. Let's make reservation:
+That's easy enough. Now we can query the server. 
+To create a reservation you need to first create a customer and set dates of reservation. Required information for customer are: first name, last name, email and number of adults.
+Let's make reservation:
 ```php
-$reservation = new \Magical\Objects\Reservation();
-$reservation->setDates('2019-08-01','2019-08-10');
+$customer = new \Magical\Objects\Customer([
+    'person_title' => 'mr', // values = ['mr', 'mrs', 'ms'] 
+    'first_name' => 'John',
+    'last_name' => 'Doe',
+    'email' => 'john.doe@mail.com',
+    'adults' => 2,
+    'children' => 1,
+    'phone' => '0123456789',
+    'description' => '' 
+]);
 
-$magiCal->makeReservation($reservation);
+\Magical\Objects\Reservation::setDates('2019-10-05', '2019-10-09');
+$response = \Magical\Objects\Reservation::create($customer);
+
+if($response->success) {
+    // See $response->reservation for details
+} else {
+    // Handle validation errors
+    if($response->code === 422) {
+        // See $response->errors for details
+    }
+    // Handle error
+    else {
+        // See $response->message for details
+    }
+}
 ```
-
 
 Documentation
 -----
-Complete documentation, instructions, and examples are available at: https://magic-calendar.com/docs
+Complete documentation, instructions, and examples are available at: https://www.magic-calendar.com/docs
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
