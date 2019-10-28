@@ -18,7 +18,7 @@ composer require magical/php-rest-api
 ```
 After installing, you need to require Composer's autoloader:
 ```php
-require_once __DIR__ . 'vendor/autoload.php';
+require 'vendor/autoload.php';
 ```
 
 Usage
